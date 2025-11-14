@@ -1,6 +1,6 @@
 # Causal Inference Cherat Sheet
 
-A collection of critical definitions, terms, ideas, concepts and so on
+A collection of critical definitions, terms, ideas, concepts based on the book "Causl Inference in Python" by Matheus Focure. 
 
 # Definitions
 
@@ -19,3 +19,11 @@ For example a common notation might be like $$Y = T(x_1, u_1) + f(x_2, u_2)$$ wh
 **_Conditional Treatment Effect CATE_**: $$CATE = \mathrm E(Y_1 - Y_0 | X = x)$$ where $X$ is some feature of the treated units, e.g. age. Relevant for deeper understanding effects, e.g. for personalization. ATT is a psecial case of CATE.  
 
 For non binary treatments one can work with incremental treatment effects.
+
+**_Bias_**: Bias is what makes correlation different from causation. $$Bias = \mathrm E(\hat \beta - \beta)$$ where $\hat \beta$ is an estimator for the parameter $\beta$ you estimate. Bias helps to understand why the ATE is (generally) different from the difference of means between treated and untreated units:
+$$\mathrm E(Y|T = 1) - \mathrm E (Y|T=0) = \mathrm E(Y_1 - Y_0 | T = 1) + (\mathrm E(Y_0 | T = 1) - \mathrm E(Y_0 | T = 0)) = ATT - Bias$$
+Note that the left hand side of the equation can be calculated from observed data, while the two terms on the right hand side can't. However, if for some reason we know $Bias = 0$ then the left hand side yields an estimator for the $ATT$. Additionally, if treated and untreated units are interchangeable (i.e. statistically the same) then ATT = ATE so we obtain an unbiased estimator for the ATE.
+
+**_Independence assumption_**: Independence means the treatment assignment is independent of the _potential_ outcome: $$(Y_0, Y_1) \bot T$$ This implies $$\mathrm E(Y_i | T) = \mathrm E(Y_i).$$
+
+**_Identification_**: Identification is the process of making assumptions on the causality and answering whether the causal effect is theoretically recoverable from the observed data under these assumptions. It precedes and is separate from estimation.
