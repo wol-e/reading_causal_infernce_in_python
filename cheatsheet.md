@@ -12,6 +12,8 @@ For example a common notation might be like $$Y = T(x_1, u_1) + f(x_2, u_2)$$ wh
 
 **_Potential Outcomes_**: Given individula outcomes $Y_i$ the potential outcomes $Y_{ti} = Y(t)_i$ are the potential outcomes given $T = t$. The observed outcome $Y(T(Y_i))_i$ is the _factual_ outcome while any potential outcome that's not observed is _counterfactual_. The _fundamental problem of causal inference_ is that ony one potential outcome can ever be observed for a given unit. 
 
+**_SUTVA_**: Stable unit treatment value assumption, meaning that a units treatment assignment only affects that units data, no other units data. For example in networks where units interact with each other this is often violated.
+
 **_Average Treatment Effect ATE_**: Given a binary tratment varaible $$\mathrm{ATE} = \mathrm E(Y_1 - Y_0) = \mathrm E(Y | do(T = 1)) - \mathrm E(Y | do(T = 0)).$$ The ATE is the average difference in the outcome when all units are treated versus all units are not treaated. Due to the fundamental problem in causal inference it can never be observed or calculated directly and one of causal inferences main opbjectives is estimating it.
 
 **_Average Treatment Effect of the Treated ATT_**: $$\mathrm{ATT} = \mathrm E(Y_1 - Y_0 | T = 1),$$ the average treatment effect only for the treated units. Depending on selection bias, this can be very different from the ATE. Answers for example the question "What was the average uplift from the marketing campaign we ran in city XY?"
@@ -24,6 +26,8 @@ For non binary treatments one can work with incremental treatment effects.
 $$\mathrm E(Y|T = 1) - \mathrm E (Y|T=0) = \mathrm E(Y_1 - Y_0 | T = 1) + (\mathrm E(Y_0 | T = 1) - \mathrm E(Y_0 | T = 0)) = ATT - Bias$$
 Note that the left hand side of the equation can be calculated from observed data, while the two terms on the right hand side can't. However, if for some reason we know $Bias = 0$ then the left hand side yields an estimator for the $ATT$. Additionally, if treated and untreated units are interchangeable (i.e. statistically the same) then ATT = ATE so we obtain an unbiased estimator for the ATE.
 
-**_Independence assumption_**: Independence means the treatment assignment is independent of the _potential_ outcome: $$(Y_0, Y_1) \bot T$$ This implies $$\mathrm E(Y_i | T) = \mathrm E(Y_i).$$
+**_Independence assumption_**: Independence means the treatment assignment is independent of the _potential_ outcome: $$(Y_0, Y_1) \bot T$$ This implies $$\mathrm E(Y_i | T) = \mathrm E(Y_i)$$ and thus 
+$$\mathrm E(Y_1 - Y_0) = \mathrm E(Y | T = 1) - \mathrm E(Y | T = 0)$$
+so we can estimate the ATE from our data via $\mathrm E(Y | T = i) \approx \frac{1}{n} \Sigma_{T = i} y$, where of course all the usual statistical considerations for this estimation approach need to be considered. Prominently independence is guaranteed in a randomized controlled trial (RCT).
 
 **_Identification_**: Identification is the process of making assumptions on the causality and answering whether the causal effect is theoretically recoverable from the observed data under these assumptions. It precedes and is separate from estimation.
